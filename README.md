@@ -1,2 +1,1 @@
-# FineTuningLLMs
-LLM Finetuning | Including Unsloth on WSL2
+# LLM Finetuning | Including Unsloth on WSL2
