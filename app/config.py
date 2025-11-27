@@ -13,3 +13,6 @@ LOCAL_MODEL_PATH = "models/models--google--gemma-3-1b-it"
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 LORA_MODE = "lora" # or "qlora"
+
+DATASET_PATH = '/mnt/c/Users/konda/Desktop/Sentiment Analysis for Mental Health Dataset.csv'
+

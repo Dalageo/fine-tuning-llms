@@ -23,7 +23,7 @@ lora_cfg = LoraConfig(
 # QLoRA adapter configuration
 qlora_cfg = LoraConfig(
     task_type="CAUSAL_LM",                   # Causal language modeling task
-
+    
     target_modules = [                       # Layers where LoRA adapters are injected
         "q_proj", "k_proj", "v_proj",        # Attention projections: query, key, and value
         "o_proj",                            # Attention output projection
