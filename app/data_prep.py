@@ -9,33 +9,44 @@ def normalize_text(text):
     text = text.replace("\n", " ").replace("\t"," ")
     return text
 
-def df_to_conversations(df, col_user, col_assistant):
-    conversations = []
-    for _, row in df.iterrows():
-        chat = [
-            {"role": "user", "content": row[col_user]},
-            {"role": "assistant", "content": row[col_assistant]}
-        ]
-        conversations.append({"conv": chat})
-    return conversations
+
+def format_chat_template(row):
+
+    chat = [
+        {"role": "user", "content": row["statement"]},
+        {"role": "assistant", "content": row["status"]}
+    ]
+    
+    return {"messages": chat}
 
 
 def prepare_dataset(dataset_path: str = DATASET_PATH):
     # Load and preprocess text
     df = pd.read_csv(dataset_path)
+    if "Unnamed: 0" in df.columns:
+        df = df.drop(columns=["Unnamed: 0"])
     df.dropna(subset=["statement", "status"], inplace=True)
     df["statement"] = df["statement"].apply(normalize_text)
     df["status"] = df["status"].apply(normalize_text)
     
-    # Split the dataset
-    full_dataset = Dataset.from_pandas(df)
-    full_dataset = full_dataset.train_test_split(test_size=0.2, seed=42)
+    # Convert to HF Dataset & Split
+    full_dataset = Dataset.from_pandas(df, preserve_index=False)
+    dataset_dict = full_dataset.train_test_split(test_size=0.2, seed=42)
     
-    print(full_dataset)
+    dataset_dict = dataset_dict.map(
+        format_chat_template,
+        remove_columns=["statement", "status"]
+    )
+    
+    train_data = dataset_dict.get("train")
+    test_data = dataset_dict.get("test")
+    
+    print("✅ Dataset Prepared Successfully:")
+    return train_data, test_data
     
     
 if __name__ == "__main__":
-    prepare_dataset()
+    train_data, test_data = prepare_dataset()
     
     
     
