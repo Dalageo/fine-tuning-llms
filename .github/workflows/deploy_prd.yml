@@ -1,0 +1,54 @@
+name: Deploy to Production
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy-to-prd:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      
+    steps:
+      - name: 🛡️ Check for correct branch
+        if: github.ref != 'refs/heads/tst'
+        run: |
+          echo "Error: This workflow can only be run from the 'tst' branch."
+          echo "You selected ${{ github.ref }}. Aborting deployment."
+          exit 1
+      
+      - name: ✅ Branch check passed
+        run: echo "Workflow started from the correct 'tst' branch. Proceeding..."
+
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "actions@github.com"
+
+      - name: Deploy to production branch
+        run: |
+          # Get the latest commit message from tst
+          COMMIT_MSG=$(git log -1 --pretty=%B origin/tst)
+          
+          # Fetch all branches
+          git fetch origin
+          
+          # Checkout prd branch
+          git checkout -b prd origin/prd || git checkout prd
+          
+          # Make sure we're up to date
+          git pull origin prd || true
+          
+          # Merge tst into prd
+          git merge origin/tst -m "Merge tst into prd: $COMMIT_MSG"
+          
+          # Push changes
+          git push origin prd
+          
+          echo "🚀 Deployed tst changes to production branch with commit message: $COMMIT_MSG"
