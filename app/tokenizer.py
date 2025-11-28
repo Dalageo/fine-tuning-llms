@@ -2,18 +2,24 @@
 from transformers import AutoTokenizer
 
 
-def load_tokenizer(model_id: str):
+def load_tokenizer(model_id: str, inference: bool = False):
     """Loads and configures the tokenizer."""
     
-    # Load Tokenizer
+    # 1. Load Tokenizer
     tokenizer = AutoTokenizer.from_pretrained(model_id)
 
-    # Configure Padding Side
-    # Training requires RIGHT padding so the model learns to predict the next token,
-    # not the empty space.
-    tokenizer.padding_side = "right"
+    
+    # 2. Configure Padding Side
+    if inference:
+        # Inference (Generation): Padding on LEFT 
+        # (So the model sees the prompt at the end and generates immediately after)
+        tokenizer.padding_side = "left"
+    else:
+        # Training requires RIGHT padding so the model learns to predict the next token,
+        # not the empty space.
+        tokenizer.padding_side = "right"
 
-    # Fix Missing Pad Token
+    # 3. Fix Missing Pad Token
     # Critical for Gemma/Llama to prevent crashes during batching.
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
