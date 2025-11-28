@@ -1,26 +1,33 @@
-from datasets import Dataset
 import pandas as pd
-from app.config import DATASET_PATH
+from datasets import Dataset
+from transformers import AutoTokenizer
 
 # Normalize the Text
 def normalize_text(text):
+    """Sanitizes input text by removing newlines and tabs."""
     if not isinstance(text, str):
         return ""
     text = text.replace("\n", " ").replace("\t"," ")
     return text
 
 
-def format_chat_template(row):
-
+def format_chat_template(row, tokenizer: AutoTokenizer):
+    """Converts a data row into a structured chat format (User/Assistant), 
+    then applies the tokenizer's chat template to generate a single training string."""
+    
     chat = [
         {"role": "user", "content": row["statement"]},
         {"role": "assistant", "content": row["status"]}
     ]
     
-    return {"messages": chat}
+    text = tokenizer.apply_chat_template(chat, tokenize=False)
+    return {"text": text}
 
 
-def prepare_dataset(dataset_path: str = DATASET_PATH):
+def prepare_dataset(dataset_path: str, tokenizer: AutoTokenizer):
+    """Load CSV data, clean text, split into train/test sets (80/20), 
+    and format inputs for the SFTTrainer."""
+    
     # Load and preprocess text
     df = pd.read_csv(dataset_path)
     if "Unnamed: 0" in df.columns:
@@ -35,42 +42,13 @@ def prepare_dataset(dataset_path: str = DATASET_PATH):
     
     dataset_dict = dataset_dict.map(
         format_chat_template,
+        fn_kwargs={"tokenizer": tokenizer},
         remove_columns=["statement", "status"]
     )
-    
+
     train_data = dataset_dict.get("train")
     test_data = dataset_dict.get("test")
     
     print("✅ Dataset Prepared Successfully:")
     return train_data, test_data
     
-    
-if __name__ == "__main__":
-    train_data, test_data = prepare_dataset()
-    
-    
-    
-
-
-
-
-
-
-
-
-
-# Random chat
-# messages = [
-#     {
-#         "role": "user", 
-#      "content": "You are a helpful assistant. "
-#     },
-#     {
-#         "role": "assistant", 
-#      "content": "Hello!"
-#     },
-# ]
-
-# # Apply the chat template to the random chat(no tokenization here)
-# gemma_chat = tokenizer.apply_chat_template(messages, tokenize=False)
-# print(gemma_chat)
