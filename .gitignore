@@ -1,4 +1,5 @@
 models/
+sft_output/
 *.safetensors
 *.pt
 __pycache__/

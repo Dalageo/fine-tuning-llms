@@ -25,7 +25,7 @@ from trl import SFTConfig, SFTTrainer
 from app.tokenizer import load_tokenizer
 from timeit import default_timer as timer
 from app.data_prep import prepare_dataset
-from app.config import DATASET_PATH, HF_REPO_ID, LORA_MODE
+from app.config import DATASET_PATH, HF_REPO_ID, LORA_MODE, ADAPTER_DIR
 
 
 def clear_gpu_memory():
@@ -35,7 +35,7 @@ def clear_gpu_memory():
     print("🧹 GPU Memory Cleared.")
     
     
-def model_training(lora_mode: str = LORA_MODE, model_id: str = HF_REPO_ID, save_only_adapters: bool = True):
+def model_training(lora_mode: str = LORA_MODE, model_id: str = HF_REPO_ID):
     """Configures and runs the SFT Training pipeline."""
     
     print(f"🚀 Starting {model_id} training with [{lora_mode.upper()}]")
@@ -53,36 +53,36 @@ def model_training(lora_mode: str = LORA_MODE, model_id: str = HF_REPO_ID, save_
     # 4. Configure trainer
     training_args = SFTConfig(
         # Training parameters
-        dataset_text_field="text",            # Specifies the column name in the dataset containing the input text
-        output_dir = "./sft_output",          # Directory where model checkpoints and logs will be saved
-        max_steps = 1200,                     # Total number of training steps to perform
-        per_device_train_batch_size = 2,      # Batch size per device during training
-        per_device_eval_batch_size = 2,       # Batch size per device during evaluation
-        learning_rate = 2e-4,                 # Initial learning rate for the optimizer.
-        optim = "adamw_8bit",                 # Optimizer to use (8-bit version of AdamW, uses less memory and is faster)
-        weight_decay = 0.01,                  # Adds L2 regularization to prevent overfitting
-        lr_scheduler_type = "linear",         # Learning rate will decay linearly from the initial value to 0
-        max_length = 1024,                    # Maximum number of tokens the model will see in each input
-        warmup_steps = 200,                   # Slowly increase learning rate from 0 to the target value in the first 200 steps (helps stabilize early training)               
-        seed = 42,                            # Seed for reproducibility of training
+        dataset_text_field="text",                  # Specifies the column name in the dataset containing the input text
+        output_dir = os.path.dirname(ADAPTER_DIR),  # Directory where model checkpoints and logs will be saved
+        max_steps = 1200,                           # Total number of training steps to perform
+        per_device_train_batch_size = 2,            # Batch size per device during training
+        per_device_eval_batch_size = 2,             # Batch size per device during evaluation
+        learning_rate = 2e-4,                       # Initial learning rate for the optimizer.
+        optim = "adamw_8bit",                       # Optimizer to use (8-bit version of AdamW, uses less memory and is faster)
+        weight_decay = 0.01,                        # Adds L2 regularization to prevent overfitting
+        lr_scheduler_type = "linear",               # Learning rate will decay linearly from the initial value to 0
+        max_length = 1024,                          # Maximum number of tokens the model will see in each input
+        warmup_steps = 200,                         # Slowly increase learning rate from 0 to the target value in the first 200 steps (helps stabilize early training)               
+        seed = 42,                                  # Seed for reproducibility of training
         
         # Precision & Memory Optimization
-        bf16 = True,                          # bfloat16 precision for faster training and reduced memory usage (recommended for RTX 40 series)
-        bf16_full_eval = True,                # Evaluate in bfloat16 to avoid HybridCache .float() bug (needed if Transformers < 4.50.1 or Accelerate < 1.4.0; safe to remove after upgrade)
-        fp16 = False,                         # float16 precision for older GPUs (e.g., RTX 30 series, T4). If both bf16 and fp16 are set to True, Trainer will prioritize bf16, as the two cannot be used together.
-        gradient_checkpointing = True,        # Saves GPU memory by not storing forward pass data. It recomputes them during backpropagation (trades speed for memory)
-        gradient_accumulation_steps = 8,      # Combine gradients from 1 different batch before updating weights (simulates larger batch size with less memory)
+        bf16 = True,                                # bfloat16 precision for faster training and reduced memory usage (recommended for RTX 40 series)
+        bf16_full_eval = True,                      # Evaluate in bfloat16 to avoid HybridCache .float() bug (needed if Transformers < 4.50.1 or Accelerate < 1.4.0; safe to remove after upgrade)
+        fp16 = False,                               # float16 precision for older GPUs (e.g., RTX 30 series, T4). If both bf16 and fp16 are set to True, Trainer will prioritize bf16, as the two cannot be used together.
+        gradient_checkpointing = True,              # Saves GPU memory by not storing forward pass data. It recomputes them during backpropagation (trades speed for memory)
+        gradient_accumulation_steps = 8,            # Combine gradients from 1 different batch before updating weights (simulates larger batch size with less memory)
         gradient_checkpointing_kwargs={"use_reentrant": False},
         
         # Evaluation & Logging
-        logging_steps = 10,                   # Frequency (in steps) to log training metrics.
-        eval_strategy = "steps",              # Evaluation strategy to adopt during training
-        eval_steps = 400,                     # Frequency (in steps) to run evaluation.
-        save_steps = 400,                     # Strategy to save checkpoints
-        save_total_limit = 1,                 # Keep only the best checkpoint
-        load_best_model_at_end = True,        # Restores best checkpoint after training
-        metric_for_best_model = "eval_loss",  # Use lowest validation loss
-        greater_is_better = False,            # Because lower loss = better
+        logging_steps = 10,                         # Frequency (in steps) to log training metrics.
+        eval_strategy = "steps",                    # Evaluation strategy to adopt during training
+        eval_steps = 600,                           # Frequency (in steps) to run evaluation.
+        save_steps = 600,                           # Strategy to save checkpoints
+        save_total_limit = 1,                       # Keep only the best checkpoint
+        load_best_model_at_end = True,              # Restores best checkpoint after training
+        metric_for_best_model = "eval_loss",        # Use lowest validation loss
+        greater_is_better = False,                  # Because lower loss = better
     )
 
     # 5. Initialize trainer
@@ -102,10 +102,9 @@ def model_training(lora_mode: str = LORA_MODE, model_id: str = HF_REPO_ID, save_
     print(f"🏁 Training complete. Time: {(end_gpu_time - start_gpu_time) / 60:.2f} minutes")
 
     # 7. Save only the adapters
-    final_adapter_path = f"./sft_output/adapters"
-    print(f"💾 Saving adapters to: {final_adapter_path}...")
-    trainer.model.save_pretrained(final_adapter_path)
-    trainer.tokenizer.save_pretrained(final_adapter_path) 
+    print(f"💾 Saving adapters to: {ADAPTER_DIR}...")
+    trainer.model.save_pretrained(ADAPTER_DIR)
+    trainer.processing_class.save_pretrained(ADAPTER_DIR) 
     
     del model
     del trainer

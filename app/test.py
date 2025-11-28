@@ -1,0 +1,19 @@
+import torch
+from peft import PeftConfig, PeftModel
+from app.config import HF_REPO_ID, ADAPTER_DIR
+from peft import get_peft_model, prepare_model_for_kbit_training
+from transformers import AutoModelForCausalLM, AutoTokenizer
+
+
+def load_model(model_id: str = HF_REPO_ID, adapter_dir: str = ADAPTER_DIR):
+    
+    
+    base_model = AutoModelForCausalLM.from_pretrained(
+            pretrained_model_name_or_path = model_id,
+            attn_implementation="eager",
+            dtype="auto",
+            device_map="auto" 
+        )
+    
+    loaded_model = PeftModel.from_pretrained(base_model, adapter_dir)
+    loaded_tokenizer = AutoTokenizer.from_pretrained(adapter_dir)

@@ -14,5 +14,6 @@ DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 LORA_MODE = "lora" # or "qlora"
 
+ADAPTER_DIR = "./sft_output/adapters"
 DATASET_PATH = '/mnt/c/Users/konda/Desktop/Sentiment Analysis for Mental Health Dataset.csv'
 
