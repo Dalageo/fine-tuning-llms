@@ -20,7 +20,7 @@ import os
 import gc
 os.environ["PYTORCH_ALLOC_CONF"] = "expandable_segments:True"
 import torch
-from app.model_init import load_model
+from app.model import load_model
 from trl import SFTConfig, SFTTrainer
 from app.tokenizer import load_tokenizer
 from timeit import default_timer as timer
@@ -35,7 +35,7 @@ def clear_gpu_memory():
     print("🧹 GPU Memory Cleared.")
     
     
-def model_training(lora_mode: str = LORA_MODE, model_id: str = HF_REPO_ID):
+def train_model(lora_mode: str = LORA_MODE, model_id: str = HF_REPO_ID):
     """Configures and runs the SFT Training pipeline."""
     
     print(f"🚀 Starting {model_id} training with [{lora_mode.upper()}]")
@@ -111,4 +111,4 @@ def model_training(lora_mode: str = LORA_MODE, model_id: str = HF_REPO_ID):
     clear_gpu_memory()
     
 if __name__ == "__main__":
-    model_training()
+    train_model()
