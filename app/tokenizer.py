@@ -1,14 +1,13 @@
 
+from app.config import HF_REPO_ID
 from transformers import AutoTokenizer
 
-
-def load_tokenizer(model_id: str, inference: bool = False):
+def load_tokenizer(model_id: str = HF_REPO_ID, inference: bool = False):
     """Loads and configures the tokenizer."""
     
     # 1. Load Tokenizer
     tokenizer = AutoTokenizer.from_pretrained(model_id)
 
-    
     # 2. Configure Padding Side
     if inference:
         # Inference (Generation): Padding on LEFT 
@@ -20,7 +19,7 @@ def load_tokenizer(model_id: str, inference: bool = False):
         tokenizer.padding_side = "right"
 
     # 3. Fix Missing Pad Token
-    # Critical for Gemma/Llama to prevent crashes during batching.
+    # For Gemma/Llama to prevent crashes during batching.
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
         
