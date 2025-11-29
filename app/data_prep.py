@@ -28,7 +28,7 @@ def prepare_dataset(dataset_path: str, tokenizer: AutoTokenizer):
     """Load CSV data, clean text, split into train/test sets (80/20), 
     and format inputs for the SFTTrainer."""
     
-    # Load and preprocess text
+    # 1. Load and preprocess text
     df = pd.read_csv(dataset_path)
     if "Unnamed: 0" in df.columns:
         df = df.drop(columns=["Unnamed: 0"])
@@ -36,19 +36,21 @@ def prepare_dataset(dataset_path: str, tokenizer: AutoTokenizer):
     df["statement"] = df["statement"].apply(normalize_text)
     df["status"] = df["status"].apply(normalize_text)
     
-    # Convert to HF Dataset & Split
+    # 2. Convert to HF Dataset & Split
     full_dataset = Dataset.from_pandas(df, preserve_index=False)
     dataset_dict = full_dataset.train_test_split(test_size=0.2, seed=42)
     
+    # 3. Apply Chat Template
     dataset_dict = dataset_dict.map(
-        format_chat_template,
-        fn_kwargs={"tokenizer": tokenizer},
-        remove_columns=["statement", "status"]
-    )
+            format_chat_template,
+            fn_kwargs={"tokenizer": tokenizer}
+        )
 
-    train_data = dataset_dict.get("train")
-    test_data = dataset_dict.get("test")
+    # 4. Prepare Splits
+    # Remove raw columns to save memory & prevent warnings in Trainer
+    train_data = dataset_dict["train"].remove_columns(["statement", "status"])
+    # Keep raw columns so it can be used for generation & accuracy checks
+    test_data = dataset_dict["test"]
     
     print("✅ Dataset Prepared Successfully:")
     return train_data, test_data
-    
