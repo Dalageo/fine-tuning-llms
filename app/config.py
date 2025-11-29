@@ -10,7 +10,6 @@ if not HF_TOKEN:
 HF_REPO_ID = "google/gemma-3-1b-it"
 LOCAL_MODEL_PATH = "models/models--google--gemma-3-1b-it"
 
-LORA_MODE = "lora" # or "qlora"
+LORA_MODE = "qlora" # or "qlora"
 ADAPTER_DIR = "./sft_output/adapters"
 DATASET_PATH = '/mnt/c/Users/konda/Desktop/Sentiment Analysis for Mental Health Dataset.csv'
-

@@ -34,6 +34,10 @@ priority = "supplemental"
 torch = {source = "torch_cu126"}
 torchvision = {source = "torch_cu126"}
 torchaudio = {source = "torch_cu126"}
+
+[tool.poetry.group.dev.dependencies]
+ipykernel = "^7.1.0"
+
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"

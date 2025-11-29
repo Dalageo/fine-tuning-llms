@@ -1,3 +1,7 @@
+"""
+Trainable parameters reported by LoRA directly correspond to the part of the model that can learn and adapt during fine-tuning. 
+We optimize only this subset of the model, leaving the rest frozen.
+"""
 from peft import LoraConfig
 
 # LoRA adapter configuration
