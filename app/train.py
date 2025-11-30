@@ -94,6 +94,13 @@ def train_model(lora_mode: str = LORA_MODE, model_id: str = HF_REPO_ID):
         processing_class=tokenizer,                  
     )
 
+    # Quick check before training starts
+    # This grabs the first processed example from the trainer's processed dataset
+    processed_sample = trainer.train_dataset[0]
+    print(f"Length of first sample: {len(processed_sample['input_ids'])}")
+    print(f"Max Length Allowed: {training_args.max_length}")
+    # If Length == Max Length, it was likely truncated.
+    
     # 6. Train
     start_gpu_time = timer()
     trainer.train()
