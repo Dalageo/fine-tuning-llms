@@ -1,12 +1,12 @@
 import torch
 from peft import PeftModel
 from app.lora_config import lora_cfg, qlora_cfg
-from app.config import HF_REPO_ID, ADAPTER_DIR, LORA_MODE
+from app.config import HF_GOOGLE_REPO_ID, ADAPTER_DIR, LORA_MODE
 from peft import get_peft_model, prepare_model_for_kbit_training
 from transformers import AutoModelForCausalLM, BitsAndBytesConfig
 
 
-def load_model(model_id: str = HF_REPO_ID, inference: bool = False):
+def load_model(model_id: str = HF_GOOGLE_REPO_ID, inference: bool = False):
     """
     - If training: Loads base model, prepares k-bit (if qlora), and initializes new adapters.
     - If inference: Loads base model and attaches existing saved adapters.

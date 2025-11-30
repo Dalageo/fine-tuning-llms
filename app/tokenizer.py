@@ -1,8 +1,8 @@
 
-from app.config import HF_REPO_ID
+from app.config import HF_GOOGLE_REPO_ID
 from transformers import AutoTokenizer
 
-def load_tokenizer(model_id: str = HF_REPO_ID, inference: bool = False):
+def load_tokenizer(model_id: str = HF_GOOGLE_REPO_ID, inference: bool = False):
     """Loads and configures the tokenizer."""
     
     # 1. Load Tokenizer
