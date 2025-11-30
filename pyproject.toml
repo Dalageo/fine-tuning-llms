@@ -1,37 +1,9 @@
-[project]
+[tool.poetry]
 name = "fine-tuning-llms"
 version = "0.1.0"
 description = "Fine-Tuning Large Language Models"
-authors = [
-    {name = "Konstantinos Dalageorgos",email = "kon.dalageorgos@gmail.com"}
-]
+authors = ["Konstantinos Dalageorgos <kon.dalageorgos@gmail.com>"]
 readme = "README.md"
-requires-python = "==3.11.*"
-
-dependencies = [
-    "python-dotenv (>=1.0.0)",
-    
-    # Core Libraries
-    "torch (==2.5.1)",        
-    "torchvision (==0.20.1)",
-    "torchaudio (==2.5.1)",
-    
-    # Hugging Face & Unsloth Stack
-    "transformers (>=4.52.0,<5.0.0)", 
-    "peft (>=0.14.0,<0.15.0)",
-    "accelerate (>=1.2.0,<2.0.0)",
-    "bitsandbytes (>=0.45.0,<0.50.0)",
-    
-    # Unsloth Requirements
-    "datasets (>=3.0.0,<4.0.0)",  
-    "trl (==0.24.0)",      
-    "unsloth (>=2025.11.4)",
-    
-    # Data Processing
-    "pandas (>=2.2.0,<3.0.0)",
-]
-
-[tool.poetry]
 package-mode = false
 
 [[tool.poetry.source]]
@@ -39,11 +11,31 @@ name = "torch_cu124"
 url = "https://download.pytorch.org/whl/cu124"
 priority = "supplemental"
 
-
 [tool.poetry.dependencies]
-torch = {version = "==2.5.1", source = "torch_cu124"}
-torchvision = {version = "==0.20.1", source = "torch_cu124"}
-torchaudio = {version = "==2.5.1", source = "torch_cu124"}
+python = "==3.11.*"
+python-dotenv = ">=1.0.0"
+pandas = ">=2.2.0"
+datasets = ">=3.0.0"
+accelerate = ">=1.0.0"
+bitsandbytes = ">=0.44.0"
+setuptools = ">=70.0.0"
+
+# Force Torch to use the CUDA 12.4 source
+torch = {version = "==2.6.0", source = "torch_cu124"}
+torchvision = {version = "==0.21.0", source = "torch_cu124"}
+torchaudio = {version = "==2.6.0", source = "torch_cu124"}
+
+# Install xformers compatible with PyTorch 2.6.0 + CUDA 12.4
+xformers = ">=0.0.28"
+
+# Unsloth packages
+unsloth = {git = "https://github.com/unslothai/unsloth.git", branch = "main"}
+unsloth-zoo = {git = "https://github.com/unslothai/unsloth-zoo.git", branch = "main"}
+
+# Pin specific versions compatible with Unsloth
+transformers = ">=4.46.0"
+peft = ">=0.13.0"
+trl = ">=0.11.0"
 
 [tool.poetry.group.dev.dependencies]
 ipykernel = "^6.29.0"
