@@ -93,7 +93,7 @@ def run_evaluation(model, tokenizer, num_samples: int = None):
 
 # Chat (Demo)
 def run_demo(model, tokenizer):
-    print("\n💬 --- Starting Interactive Demo (Type 'q' to quit) ---")
+    print("\n --- Starting Interactive Demo 💬 (Type 'q' to quit) ---")
     
     while True:
         user_input = input("\n📝 User: ")
