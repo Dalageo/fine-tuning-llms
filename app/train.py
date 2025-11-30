@@ -1,4 +1,5 @@
-"""### **For training the model**:
+"""
+### **For training the model**:
 
 - **Per Sequence**: Each individual sequence (e.g., prompt + completion) cannot exceed the model's maximum token length of 32768 tokens.
 - **Per Batch**: You can have multiple sequences in a batch, and their combined tokens can exceed 32768 as long as each sequence respects the 32768 token limit.
@@ -15,7 +16,9 @@
     **This would still be allowed since batch size is irrelevant as long as individual sequences are within the limit.**
 
 ### **For inference**:
-In our case if the conversation with the model exceeds the 32768 tokens, older tokens are typically removed using a sliding window approach to make room for new tokens. That means that the model loses context from the beginning of the conversation."""
+In our case if the conversation with the model exceeds the 32768 tokens, older tokens are typically removed using a sliding window approach to make room for new tokens. That means that the model loses context from the beginning of the conversation.
+"""
+
 import os
 import gc
 os.environ["PYTORCH_ALLOC_CONF"] = "expandable_segments:True"
@@ -25,7 +28,7 @@ from trl import SFTConfig, SFTTrainer
 from app.tokenizer import load_tokenizer
 from timeit import default_timer as timer
 from app.data_prep import prepare_dataset
-from app.config import DATASET_PATH, HF_GOOGLE_REPO_ID, LORA_MODE, ADAPTER_DIR
+from app.config import DATASET_PATH, HF_REPO_ID, LORA_MODE, ADAPTER_DIR
 
 
 def clear_gpu_memory():
@@ -35,7 +38,7 @@ def clear_gpu_memory():
     print("🧹 GPU Memory Cleared.")
     
     
-def train_model(lora_mode: str = LORA_MODE, model_id: str = HF_GOOGLE_REPO_ID):
+def train_model(lora_mode: str = LORA_MODE, model_id: str = HF_REPO_ID):
     """Configures and runs the SFT Training pipeline."""
     
     print(f"🚀 Starting training with [{lora_mode.upper().replace('O', 'o')}]")
@@ -91,7 +94,7 @@ def train_model(lora_mode: str = LORA_MODE, model_id: str = HF_GOOGLE_REPO_ID):
         args=training_args,
         train_dataset=train_data,
         eval_dataset=test_data,
-        processing_class=tokenizer,                  
+        processing_class=tokenizer,               
     )
 
     # Quick check before training starts

@@ -3,4 +3,5 @@ sft_output/
 *.safetensors
 *.pt
 __pycache__/
+.venv/
 .env

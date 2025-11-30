@@ -1,4 +1,4 @@
-from app.config import HF_TOKEN, HF_GOOGLE_REPO_ID, HF_UNSLOTH_REPO_ID
+from app.config import HF_TOKEN, HF_REPO_ID
 from huggingface_hub import login, snapshot_download
 
 
@@ -17,8 +17,7 @@ def download_model(hf_token: str, hf_repo_id: str):
     return local_dir
 
 if __name__ == "__main__":
-    download_model(hf_token=HF_TOKEN, hf_repo_id=HF_GOOGLE_REPO_ID)
-    download_model(hf_token=HF_TOKEN, hf_repo_id=HF_UNSLOTH_REPO_ID)
+    download_model(hf_token=HF_TOKEN, hf_repo_id=HF_REPO_ID)
     
 
 
