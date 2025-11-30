@@ -52,9 +52,10 @@ def inspect_tokenizer(tokenizer: AutoTokenizer):
     print(f"EOS Token ID: {tokenizer.eos_token_id} ({tokenizer.eos_token})")
     print(f"PAD Token ID: {tokenizer.pad_token_id} ({tokenizer.pad_token})")
     print(f"Padding Side: {tokenizer.padding_side}") 
-    # Maximum number of tokens the tokenizer can handle for a single sequence.
-    # While the model may support longer sequences, this is the practical limit for tokenization,
-    # typically set to prevent memory overflow and optimize performance.
+    # This is not the limit of what the tokenizer can process (it can tokenize infinite text).
+    # This is the limit of the Model's Context Window (e.g., 4096 or 8192 tokens).
+    # It acts as a strict instruction: "Truncate any input longer than this number."
+    # If this prints a huge number (1e30), it means no limit is set.
     print(f"Model Max Length: {tokenizer.model_max_length}")
 
     # After tokenizing, the model converts token IDs into embeddings through the embeddings layer. These embeddings capture semantic and contextual information about the tokens. Embeddings in models like transformers function similarly to how CNNs capture features, but instead of visual features (edges, textures, etc.), embeddings capture linguistic and semantic features of tokens. Example embeddings for each token (as vectors):
