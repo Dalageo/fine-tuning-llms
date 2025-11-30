@@ -25,7 +25,7 @@ from trl import SFTConfig, SFTTrainer
 from app.tokenizer import load_tokenizer
 from timeit import default_timer as timer
 from app.data_prep import prepare_dataset
-from app.config import DATASET_PATH, HF_REPO_ID, LORA_MODE, ADAPTER_DIR
+from app.config import DATASET_PATH, HF_GOOGLE_REPO_ID, LORA_MODE, ADAPTER_DIR
 
 
 def clear_gpu_memory():
@@ -35,7 +35,7 @@ def clear_gpu_memory():
     print("🧹 GPU Memory Cleared.")
     
     
-def train_model(lora_mode: str = LORA_MODE, model_id: str = HF_REPO_ID):
+def train_model(lora_mode: str = LORA_MODE, model_id: str = HF_GOOGLE_REPO_ID):
     """Configures and runs the SFT Training pipeline."""
     
     print(f"🚀 Starting training with [{lora_mode.upper().replace('O', 'o')}]")

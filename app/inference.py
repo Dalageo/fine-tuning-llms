@@ -3,7 +3,7 @@ from app.model import load_model
 from transformers import TextStreamer
 from app.tokenizer import load_tokenizer
 from app.data_prep import prepare_dataset
-from app.config import HF_REPO_ID, DATASET_PATH
+from app.config import HF_GOOGLE_REPO_ID, DATASET_PATH
 
 
 def generate_response(model, tokenizer, input_text, use_streamer=False):
@@ -107,8 +107,8 @@ def run_demo(model, tokenizer):
     
 
 if __name__ == "__main__":
-    model = load_model(model_id=HF_REPO_ID, inference=True)
-    tokenizer = load_tokenizer(model_id=HF_REPO_ID, inference=True)
+    model = load_model(model_id=HF_GOOGLE_REPO_ID, inference=True)
+    tokenizer = load_tokenizer(model_id=HF_GOOGLE_REPO_ID, inference=True)
     choice = input("Type 'eval' for dataset evaluation or 'chat' for demo: ").strip().lower()
     
     if choice == 'eval':
