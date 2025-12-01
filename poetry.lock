@@ -3614,7 +3614,7 @@ files = [
 
 [[package]]
 name = "unsloth"
-version = "2025.11.4"
+version = "2025.11.6"
 description = "2-5X faster training, reinforcement learning & finetuning"
 optional = false
 python-versions = "<3.14,>=3.9"
@@ -3629,7 +3629,7 @@ colab = ["unsloth[cu121]"]
 colab-ampere = ["unsloth[colab-ampere-torch220]", "unsloth[flashattention]"]
 colab-ampere-torch211 = ["bitsandbytes (==0.45.5)", "flash-attn (>=2.6.3) ; \"linux\" in sys_platform", "ninja", "packaging", "unsloth[cu121onlytorch211]", "unsloth[huggingface]"]
 colab-ampere-torch220 = ["bitsandbytes (>=0.45.5,!=0.46.0,!=0.48.0)", "flash-attn (>=2.6.3) ; \"linux\" in sys_platform", "ninja", "packaging", "unsloth[cu121onlytorch220]", "unsloth[huggingface]"]
-colab-new = ["bitsandbytes (>=0.45.5,!=0.46.0,!=0.48.0)", "datasets[] (>=3.4.1,<4.0.dev0 || >4.1.0,<4.4.0)", "hf_transfer", "huggingface_hub (>=0.34.0)", "numpy", "packaging", "protobuf", "psutil", "sentencepiece (>=0.2.0)", "tqdm", "transformers (>=4.51.3,!=4.52.0,!=4.52.1,!=4.52.2,!=4.52.3,!=4.53.0,!=4.54.0,!=4.55.0,!=4.55.1,!=4.57.0,<=4.57.2)", "tyro", "unsloth[triton]", "unsloth_zoo (>=2025.11.5)", "wheel (>=0.42.0)"]
+colab-new = ["bitsandbytes (>=0.45.5,!=0.46.0,!=0.48.0)", "datasets (>=3.4.1,<4.0.dev0 || >4.1.0,<4.4.0)", "hf_transfer", "huggingface_hub (>=0.34.0)", "numpy", "packaging", "protobuf", "psutil", "sentencepiece (>=0.2.0)", "tqdm", "transformers (>=4.51.3,!=4.52.0,!=4.52.1,!=4.52.2,!=4.52.3,!=4.53.0,!=4.54.0,!=4.55.0,!=4.55.1,!=4.57.0,<=4.57.2)", "tyro", "unsloth[triton]", "unsloth_zoo (>=2025.11.6)", "wheel (>=0.42.0)"]
 colab-no-deps = ["accelerate (>=0.34.1)", "bitsandbytes (>=0.45.5,!=0.46.0,!=0.48.0)", "peft (>=0.7.1)", "protobuf", "trl (>=0.18.2,!=0.19.0,<=0.24.0)", "xformers ; (\"linux\" in sys_platform or sys_platform == \"win32\") and (platform_machine == \"AMD64\" or platform_machine == \"x86_64\")"]
 colab-torch211 = ["bitsandbytes (==0.45.5)", "unsloth[cu121onlytorch211]", "unsloth[huggingface]"]
 colab-torch220 = ["bitsandbytes (>=0.45.5,!=0.46.0,!=0.48.0)", "unsloth[cu121onlytorch220]", "unsloth[huggingface]"]
@@ -3749,8 +3749,8 @@ flashattentiontorch250abifalsecu12x = ["flash_attn @ https://github.com/Dao-AILa
 flashattentiontorch250abitruecu12x = ["flash_attn @ https://github.com/Dao-AILab/flash-attention/releases/download/v2.7.4.post1/flash_attn-2.7.4.post1+cu12torch2.5cxx11abiTRUE-cp310-cp310-linux_x86_64.whl ; \"linux\" in sys_platform and python_version == \"3.10\"", "flash_attn @ https://github.com/Dao-AILab/flash-attention/releases/download/v2.7.4.post1/flash_attn-2.7.4.post1+cu12torch2.5cxx11abiTRUE-cp311-cp311-linux_x86_64.whl ; \"linux\" in sys_platform and python_version == \"3.11\"", "flash_attn @ https://github.com/Dao-AILab/flash-attention/releases/download/v2.7.4.post1/flash_attn-2.7.4.post1+cu12torch2.5cxx11abiTRUE-cp312-cp312-linux_x86_64.whl ; \"linux\" in sys_platform and python_version == \"3.12\"", "flash_attn @ https://github.com/Dao-AILab/flash-attention/releases/download/v2.7.4.post1/flash_attn-2.7.4.post1+cu12torch2.5cxx11abiTRUE-cp313-cp313-linux_x86_64.whl ; \"linux\" in sys_platform and python_version == \"3.13\"", "flash_attn @ https://github.com/Dao-AILab/flash-attention/releases/download/v2.7.4.post1/flash_attn-2.7.4.post1+cu12torch2.5cxx11abiTRUE-cp39-cp39-linux_x86_64.whl ; \"linux\" in sys_platform and python_version == \"3.9\""]
 flashattentiontorch260abifalsecu12x = ["flash_attn @ https://github.com/Dao-AILab/flash-attention/releases/download/v2.7.4.post1/flash_attn-2.7.4.post1+cu12torch2.6cxx11abiFALSE-cp310-cp310-linux_x86_64.whl ; \"linux\" in sys_platform and python_version == \"3.10\"", "flash_attn @ https://github.com/Dao-AILab/flash-attention/releases/download/v2.7.4.post1/flash_attn-2.7.4.post1+cu12torch2.6cxx11abiFALSE-cp311-cp311-linux_x86_64.whl ; \"linux\" in sys_platform and python_version == \"3.11\"", "flash_attn @ https://github.com/Dao-AILab/flash-attention/releases/download/v2.7.4.post1/flash_attn-2.7.4.post1+cu12torch2.6cxx11abiFALSE-cp312-cp312-linux_x86_64.whl ; \"linux\" in sys_platform and python_version == \"3.12\"", "flash_attn @ https://github.com/Dao-AILab/flash-attention/releases/download/v2.7.4.post1/flash_attn-2.7.4.post1+cu12torch2.6cxx11abiFALSE-cp313-cp313-linux_x86_64.whl ; \"linux\" in sys_platform and python_version == \"3.13\"", "flash_attn @ https://github.com/Dao-AILab/flash-attention/releases/download/v2.7.4.post1/flash_attn-2.7.4.post1+cu12torch2.6cxx11abiFALSE-cp39-cp39-linux_x86_64.whl ; \"linux\" in sys_platform and python_version == \"3.9\""]
 flashattentiontorch260abitruecu12x = ["flash_attn @ https://github.com/Dao-AILab/flash-attention/releases/download/v2.7.4.post1/flash_attn-2.7.4.post1+cu12torch2.6cxx11abiTRUE-cp310-cp310-linux_x86_64.whl ; \"linux\" in sys_platform and python_version == \"3.10\"", "flash_attn @ https://github.com/Dao-AILab/flash-attention/releases/download/v2.7.4.post1/flash_attn-2.7.4.post1+cu12torch2.6cxx11abiTRUE-cp311-cp311-linux_x86_64.whl ; \"linux\" in sys_platform and python_version == \"3.11\"", "flash_attn @ https://github.com/Dao-AILab/flash-attention/releases/download/v2.7.4.post1/flash_attn-2.7.4.post1+cu12torch2.6cxx11abiTRUE-cp312-cp312-linux_x86_64.whl ; \"linux\" in sys_platform and python_version == \"3.12\"", "flash_attn @ https://github.com/Dao-AILab/flash-attention/releases/download/v2.7.4.post1/flash_attn-2.7.4.post1+cu12torch2.6cxx11abiTRUE-cp313-cp313-linux_x86_64.whl ; \"linux\" in sys_platform and python_version == \"3.13\"", "flash_attn @ https://github.com/Dao-AILab/flash-attention/releases/download/v2.7.4.post1/flash_attn-2.7.4.post1+cu12torch2.6cxx11abiTRUE-cp39-cp39-linux_x86_64.whl ; \"linux\" in sys_platform and python_version == \"3.9\""]
-huggingface = ["torchvision", "unsloth[huggingfacenotorch]", "unsloth[triton]", "unsloth_zoo (>=2025.11.5)"]
-huggingfacenotorch = ["accelerate (>=0.34.1)", "datasets[] (>=3.4.1,<4.0.dev0 || >4.1.0,<4.4.0)", "diffusers", "hf_transfer", "huggingface_hub (>=0.34.0)", "numpy", "packaging", "peft (>=0.7.1,!=0.11.0)", "protobuf", "psutil", "sentencepiece (>=0.2.0)", "tqdm", "transformers (>=4.51.3,!=4.52.0,!=4.52.1,!=4.52.2,!=4.52.3,!=4.53.0,!=4.54.0,!=4.55.0,!=4.55.1,!=4.57.0,<=4.57.2)", "trl (>=0.18.2,!=0.19.0,<=0.24.0)", "tyro", "wheel (>=0.42.0)"]
+huggingface = ["torchvision", "unsloth[huggingfacenotorch]", "unsloth[triton]", "unsloth_zoo (>=2025.11.6)"]
+huggingfacenotorch = ["accelerate (>=0.34.1)", "datasets (>=3.4.1,<4.0.dev0 || >4.1.0,<4.4.0)", "diffusers", "hf_transfer", "huggingface_hub (>=0.34.0)", "numpy", "packaging", "peft (>=0.7.1,!=0.11.0)", "protobuf", "psutil", "sentencepiece (>=0.2.0)", "tqdm", "transformers (>=4.51.3,!=4.52.0,!=4.52.1,!=4.52.2,!=4.52.3,!=4.53.0,!=4.54.0,!=4.55.0,!=4.55.1,!=4.57.0,<=4.57.2)", "trl (>=0.18.2,!=0.19.0,<=0.24.0)", "tyro", "wheel (>=0.42.0)"]
 intel = ["unsloth[intelgputorch280]"]
 intel-gpu-torch260 = ["unsloth[intelgputorch260]"]
 intel-gpu-torch270 = ["unsloth[intelgputorch270]"]
@@ -3769,11 +3769,11 @@ windows = ["bitsandbytes (>=0.45.5,!=0.46.0,!=0.48.0) ; sys_platform == \"win32\
 type = "git"
 url = "https://github.com/unslothai/unsloth.git"
 reference = "main"
-resolved_reference = "0fb14e6a76f3695d01314d7b3faf7252141d9f56"
+resolved_reference = "fb9ea50c30e4b3f0f4819c767c204444858b272c"
 
 [[package]]
 name = "unsloth_zoo"
-version = "2025.11.5"
+version = "2025.11.6"
 description = "Utils for Unsloth"
 optional = false
 python-versions = "<3.14,>=3.9"
@@ -3810,14 +3810,14 @@ wheel = ">=0.42.0"
 
 [package.extras]
 base = ["unsloth_zoo[huggingface]"]
-huggingface = ["accelerate (>=0.34.1)", "cut_cross_entropy ; python_version >= \"3.10\"", "datasets[] (>=3.4.1,<4.0.dev0 || >4.1.0,<4.4.0)", "filelock", "hf_transfer", "huggingface_hub (>=0.34.0)", "msgspec", "numpy", "packaging (>=24.1)", "peft (>=0.7.1,!=0.11.0)", "pillow", "protobuf", "psutil", "regex", "sentencepiece (>=0.2.0)", "tqdm", "transformers (>=4.51.3,!=4.52.0,!=4.52.1,!=4.52.2,!=4.52.3,!=4.53.0,!=4.54.0,!=4.55.0,!=4.55.1,<=4.57.2)", "trl (>=0.18.2,!=0.19.0,<=0.24.0)", "typing_extensions", "tyro", "wheel (>=0.42.0)"]
+huggingface = ["accelerate (>=0.34.1)", "cut_cross_entropy ; python_version >= \"3.10\"", "datasets (>=3.4.1,<4.0.dev0 || >4.1.0,<4.4.0)", "filelock", "hf_transfer", "huggingface_hub (>=0.34.0)", "msgspec", "numpy", "packaging (>=24.1)", "peft (>=0.7.1,!=0.11.0)", "pillow", "protobuf", "psutil", "regex", "sentencepiece (>=0.2.0)", "tqdm", "transformers (>=4.51.3,!=4.52.0,!=4.52.1,!=4.52.2,!=4.52.3,!=4.53.0,!=4.54.0,!=4.55.0,!=4.55.1,<=4.57.2)", "trl (>=0.18.2,!=0.19.0,<=0.24.0)", "typing_extensions", "tyro", "wheel (>=0.42.0)"]
 intelgpu = ["torch (>=2.4.0)", "triton (>=3.0.0) ; \"linux\" in sys_platform", "unsloth_zoo[huggingface]"]
 
 [package.source]
 type = "git"
 url = "https://github.com/unslothai/unsloth-zoo.git"
 reference = "main"
-resolved_reference = "7209a76795401a08f43403c3d79c17a01ac6eedb"
+resolved_reference = "e1d6791803ec67acc8f1c61a6c7ca665bdb0cefc"
 
 [[package]]
 name = "urllib3"

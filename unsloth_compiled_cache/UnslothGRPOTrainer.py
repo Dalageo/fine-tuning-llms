@@ -1,6 +1,6 @@
 """
-2025.11.5
-2025.11.4
+2025.11.6
+2025.11.6
 4.57.2
 0.24.0
 __UNSLOTH_VERSIONING__
@@ -98,7 +98,7 @@ def calculate_pad_tokens_in_prompt(
     pad_token_id: int
 ) -> torch.Tensor:
     """
-    Given prompt tensor, it returns all the left padded tokens in that sequence. so [pad, pad, pad, cat] = 3 tokens 
+    Given prompt tensor, it returns all the left padded tokens in that sequence. so [pad, pad, pad, cat] = 3 tokens
     """
     if logits_to_keep >= input_ids.shape[1]:
         raise ValueError("logits_to_keep must be smaller than the sequence length.")
@@ -238,7 +238,7 @@ def grpo_compute_loss(
     with torch.no_grad():
         if beta != 0.0:
             assert ref_logits is not None, "ref_logits should not be None when beta != 0.0"
-            
+
             # Optional logit softcapping and logit dividing
             if logit_scale_multiply != 0: ref_logits = ref_logits * logit_scale_multiply
             if logit_scale_divide   != 0: ref_logits = ref_logits / logit_scale_divide
@@ -271,7 +271,7 @@ def grpo_compute_loss(
             )
         pass
     pass
-    
+
     # Reverse KL
     # Note that this is a low variance low bias estimator for the KL divergence as used in GRPO paper
     if beta != 0.0:
@@ -288,7 +288,7 @@ def grpo_compute_loss(
 
     # Below is forward KL (normal KL)
     # kl_i = torch.exp(old) * (old - new)
-    if old_logits is not None: 
+    if old_logits is not None:
         log_ratio = new - old
     else:
         log_ratio = new - new.detach()
@@ -322,7 +322,7 @@ def grpo_compute_loss(
     loss_i = -torch.min(loss_1, loss_2)
 
     if use_vllm and sampling_per_token_logps is not None:
-        loss_i = loss_i * importance_sampling_ratio     
+        loss_i = loss_i * importance_sampling_ratio
         #delta for metric
         with torch.no_grad():
             delta = torch.abs(old - sampling_per_token_logps)
@@ -333,7 +333,7 @@ def grpo_compute_loss(
         flat_is_ratio = torch.tensor([]).detach()
     if beta != 0.0:
         loss_i = loss_i + beta * kl_i
-    
+
     mask = mask.to(torch.float32)
     n_mask_per_reward = mask.sum(1)
 
@@ -350,7 +350,7 @@ def grpo_compute_loss(
     elif loss_type == "dapo":
         normalizer = num_items_in_batch/ num_processes
         loss = (loss_i * mask).sum() / normalizer
-    else: 
+    else:
         raise ValueError(f"Unknown loss type: {loss_type}")
 
     # loss = (loss_i * mask).sum() / mask.sum()
@@ -380,17 +380,17 @@ class UnslothEfficientGRPO(torch.autograd.Function):
             with torch.no_grad():
                 if beta != 0.0:
                     ref_logits = torch.matmul(ref_hidden_states.to(lm_head.dtype), lm_head.t())
-                    ref_logits = ref_logits[:, :-1, :] # exclude the last logit: it corresponds to the next token pred 
+                    ref_logits = ref_logits[:, :-1, :] # exclude the last logit: it corresponds to the next token pred
                 else:
                     ref_logits = None
                 if old_hidden_states is not None:
                     old_logits = torch.matmul(old_hidden_states.to(lm_head.dtype), lm_head.t())
-                    old_logits = old_logits[:, :-1, :] # exclude the last logit: it corresponds to the next token pred 
-                else: 
+                    old_logits = old_logits[:, :-1, :] # exclude the last logit: it corresponds to the next token pred
+                else:
                     old_logits = None
-            # if old_hidden_states is not None: 
+            # if old_hidden_states is not None:
             #     old_logits = torch.matmul(old_hidden_states, lm_head.t()) #last logit already excluded
-            #     old_logits = old_logits[:, :-1, :] # exclude the last logit: it corresponds to the next token pred 
+            #     old_logits = old_logits[:, :-1, :] # exclude the last logit: it corresponds to the next token pred
             # else:
             #     old_logits = None
             # unsloth_zoo/rl_replacements.py
@@ -453,15 +453,15 @@ class UnslothEfficientGRPO(torch.autograd.Function):
 
         grad_inputs_chunks = torch.chunk(grad_inputs,        chunks = n_chunks, dim = 0)
         new_hidden_states  = torch.chunk(_new_hidden_states, chunks = n_chunks, dim = 0)
-        if _old_hidden_states is not None: 
+        if _old_hidden_states is not None:
             old_hidden_states  = torch.chunk(_old_hidden_states, chunks = n_chunks, dim = 0)
-        else: 
+        else:
             old_hidden_states = [None] * n_chunks
-        if _ref_hidden_states is not None: 
+        if _ref_hidden_states is not None:
             ref_hidden_states  = torch.chunk(_ref_hidden_states, chunks = n_chunks, dim = 0)
-        else: 
+        else:
             ref_hidden_states = [None] * n_chunks
-        if _sampling_per_token_logps is not None: 
+        if _sampling_per_token_logps is not None:
             sampling_per_token_logps  = torch.chunk(_sampling_per_token_logps, chunks = n_chunks, dim = 0)
         else:
             sampling_per_token_logps = [None] * n_chunks
@@ -482,11 +482,11 @@ class UnslothEfficientGRPO(torch.autograd.Function):
 
             # mark_dynamic(new_hidden_states_j)
             # mark_dynamic(ref_hidden_states_j)
-            # if old_hidden_states_j is not None: 
+            # if old_hidden_states_j is not None:
             #     mark_dynamic(old_hidden_states_j)
             # mark_dynamic(input_ids_j)
             # mark_dynamic(mask_j)
-            
+
             accumulate_chunk(
                 new_hidden_states_j,
                 old_hidden_states_j,
@@ -535,7 +535,7 @@ def grpo_accumulated_loss(
     completion_mask,
     advantages,
     old_hidden_states,
-    ref_hidden_states, 
+    ref_hidden_states,
     n_chunks = -1,
     **kwargs,
 ):
@@ -546,7 +546,7 @@ def grpo_accumulated_loss(
     image_grid_thw = kwargs.get('image_grid_thw',None)
     pixel_attention_mask = kwargs.get('pixel_attention_mask',None)
     image_sizes = kwargs.get('image_sizes',None)
-    #delete this from kwargs so less issues 
+    #delete this from kwargs so less issues
     sampling_per_token_logps = kwargs.pop("sampling_per_token_logps", None)
     kwargs["vllm_importance_sampling_cap"] = trainer.vllm_importance_sampling_cap if sampling_per_token_logps is not None else None
     kwargs["use_vllm"] = trainer.use_vllm
@@ -579,9 +579,9 @@ def grpo_accumulated_loss(
             sampling_per_token_logps = align_logprobs_with_mask(sampling_per_token_logps, completion_mask)
         attention_mask =  input_ids != trainer.processing_class.pad_token_id
         attention_mask = attention_mask.to(attention_mask.dtype)
-    else: 
+    else:
         completion_input_ids = input_ids[:, -logits_to_keep:]
-    
+
     unwrapped_model = trainer.accelerator.unwrap_model(trainer.model, keep_fp32_wrapper = False)
 
     # Do not move hidden_states from device 1 to device 0:
@@ -608,11 +608,11 @@ def grpo_accumulated_loss(
 
             #keep extra logit as we generated a new token
             new_hidden_states = new_hidden_states[:, -(logits_to_keep +max_left_pad+1): , :]
-            if ref_hidden_states is not None: 
+            if ref_hidden_states is not None:
                 ref_hidden_states = ref_hidden_states[:, -(logits_to_keep +max_left_pad+1): , :]
-            if old_hidden_states is not None: 
+            if old_hidden_states is not None:
                 old_hidden_states = old_hidden_states[:, -(logits_to_keep +max_left_pad+1): , :]
-        else: 
+        else:
             new_hidden_states = unwrapped_model(
                 input_ids = input_ids,
                 attention_mask = attention_mask,
@@ -636,8 +636,6 @@ def grpo_accumulated_loss(
         n_chunks,
         kwargs # pass kwargs as a dict
     )
-
-    
     # Must force not returning hidden states but logits otherwise gibberish
     os.environ["UNSLOTH_RETURN_HIDDEN_STATES"] = "0"
 
@@ -703,7 +701,7 @@ def grpo_compute_loss_slow(
     with torch.no_grad():
         if beta != 0.0:
             assert ref_logits is not None, "ref_logits should not be None when beta != 0.0"
-            
+
             # Optional logit softcapping and logit dividing
             if logit_scale_multiply != 0: ref_logits = ref_logits * logit_scale_multiply
             if logit_scale_divide   != 0: ref_logits = ref_logits / logit_scale_divide
@@ -736,7 +734,7 @@ def grpo_compute_loss_slow(
             )
         pass
     pass
-    
+
     # Reverse KL
     # Note that this is a low variance low bias estimator for the KL divergence as used in GRPO paper
     if beta != 0.0:
@@ -753,7 +751,7 @@ def grpo_compute_loss_slow(
 
     # Below is forward KL (normal KL)
     # kl_i = torch.exp(old) * (old - new)
-    if old_logits is not None: 
+    if old_logits is not None:
         log_ratio = new - old
     else:
         log_ratio = new - new.detach()
@@ -787,7 +785,7 @@ def grpo_compute_loss_slow(
     loss_i = -torch.min(loss_1, loss_2)
 
     if use_vllm and sampling_per_token_logps is not None:
-        loss_i = loss_i * importance_sampling_ratio     
+        loss_i = loss_i * importance_sampling_ratio
         #delta for metric
         with torch.no_grad():
             delta = torch.abs(old - sampling_per_token_logps)
@@ -798,7 +796,7 @@ def grpo_compute_loss_slow(
         flat_is_ratio = torch.tensor([]).detach()
     if beta != 0.0:
         loss_i = loss_i + beta * kl_i
-    
+
     mask = mask.to(torch.float32)
     n_mask_per_reward = mask.sum(1)
 
@@ -815,7 +813,7 @@ def grpo_compute_loss_slow(
     elif loss_type == "dapo":
         normalizer = num_items_in_batch/ num_processes
         loss = (loss_i * mask).sum() / normalizer
-    else: 
+    else:
         raise ValueError(f"Unknown loss type: {loss_type}")
 
     # loss = (loss_i * mask).sum() / mask.sum()
@@ -835,6 +833,14 @@ def grpo_compute_loss_slow(
 
 def grpo_update_SamplingParams(SamplingParams, generation_kwargs, vllm_sampling_params = None):
     good_sampling_params_keys = inspect.signature(SamplingParams).parameters.keys()
+
+    # Filter generation_kwargs
+    new_generation_kwargs = {}
+    for key in generation_kwargs.keys():
+        if key in good_sampling_params_keys:
+            new_generation_kwargs[key] = generation_kwargs[key]
+    generation_kwargs = new_generation_kwargs
+
     if vllm_sampling_params is not None:
         for key in good_sampling_params_keys:
             if hasattr(vllm_sampling_params, key):
@@ -3459,7 +3465,7 @@ class UnslothGRPOTrainer(_UnslothGRPOTrainer):
             force_float32 = True
         mixed_precision_dtype = os.environ.get('UNSLOTH_MIXED_PRECISION', 'float32')
         dtype = getattr(model.config, 'dtype', None) or getattr(model.config, 'torch_dtype', None)
-        if dtype is None: dtype = model.get_input_embeddings().dtype
+        if dtype is None: dtype = model.get_input_embeddings().weight.dtype
         from unsloth_zoo.utils import _get_dtype
         dtype = _get_dtype(dtype)
         float16 = dtype == torch.float16
@@ -3517,7 +3523,7 @@ class UnslothGRPOTrainer(_UnslothGRPOTrainer):
                 max_seq_length = model.max_seq_length
                 if hasattr(args, 'max_seq_length'): args.max_seq_length = max_seq_length
         if model is not None and hasattr(model, 'for_training'):
-            model.for_training()
+            model.for_training(use_gradient_checkpointing=getattr(args, 'gradient_checkpointing', True))
         if 'tokenizer' in locals() and hasattr(tokenizer, 'padding_side'): tokenizer.padding_side = 'right'
         if 'processing_class' in locals():
             if hasattr(processing_class, 'padding_side'): processing_class.padding_side = 'right'
@@ -3545,7 +3551,7 @@ class UnslothGRPOTrainer(_UnslothGRPOTrainer):
             if getattr(args, "_n_gpu", 1) != 1:
                 args._n_gpu = 1
         if "model" in locals() and hasattr(model, "for_training"):
-            model.for_training()
+            model.for_training(use_gradient_checkpointing=getattr(args, 'gradient_checkpointing', True))
         super().__init__(
             model = model,
             reward_funcs = reward_funcs,
