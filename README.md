@@ -18,53 +18,17 @@
 
 This project implements a resource-efficient method for fine-tuning Large Language Models (LLMs) on consumer-grade hardware. It focuses on the technical implementation of **Parameter-Efficient Fine-Tuning (PEFT)**, offering a modular codebase that supports two distinct training pathways: the standard [**Hugging Face**](https://huggingface.co/) library and the optimized [**Unsloth**](https://unsloth.ai/) framework.
 
-To achieve this efficiency, the system employs **Low-Rank Adaptation (LoRA)**. Instead of retraining the full model parameters, a process that requires massive computational resources, LoRA freezes the pre-trained model and injects trainable rank-decomposition matrices into the transformer layers. For further optimization, the project supports **QLoRA (Quantized LoRA)**. This technique quantizes the frozen base model to 4-bit precision to significantly reduce memory usage (VRAM) while maintaining model performance. This approach makes it possible to fine-tune billion-parameter models on standard GPUs.
+To achieve this efficiency, the system employs **Low-Rank Adaptation (LoRA)**. Instead of retraining the full model parameters, a process that requires massive computational resources, LoRA freezes the pre-trained model and injects trainable rank-decomposition matrices into the transformer layers. For further optimization, the project supports **QLoRA (Quantized LoRA)**. This technique quantizes the frozen base model to **4-bit precision** to significantly reduce memory usage (VRAM) while maintaining model performance. This approach makes it possible to fine-tune billion-parameter models on standard GPUs.
 
 The implementation is demonstrated using **Google's Gemma-3-1B-IT** as the base model and serves as a practical reference for developers looking to adapt similar architectures to downstream tasks.
 
-## Project Architecture
 
-The pipeline consists of three main stages:
+## Dataset Description
 
-1. **Data Preparation**: CSV dataset is loaded, cleaned, and formatted into a conversational template compatible with instruction-tuned models
-2. **Training**: The model is fine-tuned using either **LoRA (Low-Rank Adaptation)** or **QLoRA (Quantized LoRA)** with 4-bit quantization
-3. **Inference**: The trained adapters are loaded onto the base model for real-time classification with both evaluation and interactive chat modes
+The project uses the [**Sentiment Analysis for Mental Health**](https://www.kaggle.com/datasets/suchintikasarkar/sentiment-analysis-for-mental-health) dataset containing user statements labeled with mental health conditions. This dataset is structured in a simple CSV format containing approximately 53,000 rows. Each entry consists of a unique identifier, the raw text statement, and the corresponding ground-truth label. It classifies text into seven distinct categories. It is important to note that the classes are imbalanced, with conditions like "Normal" and "Depression" being significantly more represented than "Personality Disorder" or "Bi-Polar." This imbalance presents a realistic challenge for fine-tuning, requiring the model to learn features for minority classes effectively. The specific labels used in this project are detailed below:
 
-## Key Features
+<div align="center"> <table> <tr> <th>Label</th> <th>Description</th> </tr> <tr> <td><b>Normal</b></td> <td>General conversation, neutral observations, or positive sentiment without distress.</td> </tr> <tr> <td><b>Depression</b></td> <td>Statements reflecting persistent sadness, hopelessness, lethargy, or loss of interest.</td> </tr> <tr> <td><b>Suicidal</b></td> <td>High-risk content indicating self-harm ideation or intent.</td> </tr> <tr> <td><b>Anxiety</b></td> <td>Expressions of excessive worry, nervousness, panic, or unease.</td> </tr> <tr> <td><b>Stress</b></td> <td>Reactions to external pressure, tension, burnout, or inability to cope.</td> </tr> <tr> <td><b>Bi-Polar</b></td> <td>Text exhibiting rapid mood cycling, manic energy, or depressive lows.</td> </tr> <tr> <td><b>Personality Disorder</b></td> <td>Patterns of behavior or inner experience that deviate markedly from expectations.</td> </tr> </table> </div>
 
-- **Dual Implementation**: Support for both standard Hugging Face and Unsloth (optimized) frameworks
-- **Memory-Efficient Training**: QLoRA with 4-bit quantization reduces memory footprint by ~75%
-- **Flexible Configuration**: Easy switching between LoRA and QLoRA modes
-- **Production-Ready**: Modular codebase with separate training and inference pipelines
-- **Interactive Modes**: Evaluation on test datasets and real-time chat interface
-- **HuggingFace Integration**: Direct model upload to HuggingFace Hub for sharing
-
-## Technical Details
-
-### LoRA vs QLoRA
-
-**LoRA (Low-Rank Adaptation)** freezes the pre-trained model weights and injects trainable rank-decomposition matrices into each layer. Instead of fine-tuning all parameters, it trains only these small adapter matrices, reducing trainable parameters by ~99%.
-
-**QLoRA** extends LoRA by quantizing the base model to 4-bit precision using NormalFloat4 (NF4), further reducing memory usage while maintaining model quality. During training, the frozen quantized weights are used for forward passes, while gradients flow only to the 16-bit adapter layers.
-
-#### Quantization Process (4-bit)
-
-The weight range (e.g., [-1.0, 1.0]) is divided into 2⁴ = 16 bins. Each weight is mapped to its nearest bin center:
-
-$$
-\text{Weight: } -0.92 \rightarrow \text{Bin 0: } -1.000 \quad (\text{error: } 0.08)
-$$
-
-Only the bin index (4 bits) is stored instead of the full float32 value (32 bits), achieving 8x compression.
-
-
-## Dataset
-
-The project uses the **Sentiment Analysis for Mental Health** dataset containing user statements labeled with mental health conditions. The data is split 80/20 for training and validation, with preprocessing steps including:
-
-- Text normalization (removing newlines, tabs)
-- Conversational formatting (user/assistant pairs)
-- Tokenizer chat template application
 
 ## Setup Instructions
 
@@ -72,8 +36,8 @@ The project uses the **Sentiment Analysis for Mental Health** dataset containing
 
 - **NVIDIA GPU** with CUDA 12.4 support (RTX 30/40 series recommended)
 - **Python 3.11**
-- **Poetry** for dependency management
-- **HuggingFace Account** with API token
+- [**Poetry**](https://github.com/python-poetry/poetry) for dependency management
+- **HuggingFace Account** with a valid [User Access Token](https://huggingface.co/settings/tokens)
 
 ### Installation
 
@@ -96,7 +60,7 @@ The project uses the **Sentiment Analysis for Mental Health** dataset containing
 
 4. **Create `.env` file** with your HuggingFace token:
    ```bash
-   echo "HF_TOKEN=your_huggingface_token_here" > .env
+   "HF_TOKEN=your_huggingface_token_here"
    ```
 
 5. **Update dataset path** in `app/configs/config.py`:
