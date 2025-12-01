@@ -112,7 +112,7 @@ if __name__ == "__main__":
     choice = input("Type 'eval' for dataset evaluation or 'chat' for demo: ").strip().lower()
     
     if choice == 'eval':
-        run_evaluation(model, tokenizer, num_samples=10)
+        run_evaluation(model, tokenizer, num_samples=5)
     elif choice == 'chat':
         run_demo(model, tokenizer)
     else:

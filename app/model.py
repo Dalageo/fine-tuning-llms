@@ -150,7 +150,7 @@ def load_model(model_id: str = HF_REPO_ID, inference: bool = False):
         
         # Standard Training
         else:
-            print("⚙️ [Standard] Initializing new adapters for training...")
+            print("⚙️  [Standard] Initializing new adapters for training...")
             
             # 3. Prepare Model for Training
             if LORA_MODE == "qlora":
