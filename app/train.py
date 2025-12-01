@@ -77,6 +77,9 @@ def train_model(lora_mode: str = LORA_MODE, model_id: str = HF_REPO_ID):
         gradient_accumulation_steps = 8,            # Combine gradients from 1 different batch before updating weights (simulates larger batch size with less memory)
         gradient_checkpointing_kwargs={"use_reentrant": False},
         
+        # Dataset Processing
+        dataset_num_proc  = 1,                      # Disable multiprocessing to prevent worker crashes
+        
         # Evaluation & Logging
         logging_steps = 10,                         # Frequency (in steps) to log training metrics.
         eval_strategy = "steps",                    # Evaluation strategy to adopt during training
