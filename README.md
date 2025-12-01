@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/your-project-banner-here.png" width="650" />
+  <img src="https://github.com/user-attachments/assets/7d945778-b9de-4c4c-89b5-9d9b34e5b101" width="650" />
 </div>
 
 <div align="center">
@@ -9,25 +9,25 @@
     <img src="https://img.shields.io/badge/PyTorch-2.6.0-orange.svg" alt="PyTorch 2.6.0"></a>
   <a href="https://developer.nvidia.com/cuda-12-4-0-download-archive" target="_blank">
   <img src="https://img.shields.io/badge/CUDA-12.4-brightgreen.svg" alt="CUDA 12.4"></a>
-  <a href="https://github.com/unslothai/unsloth" target="_blank">
-    <img src="https://img.shields.io/badge/Unsloth-Enabled-purple.svg" alt="Unsloth"></a>
   <a href="https://github.com/Dalageo/fine-tuning-llms/blob/main/LICENSE" target="_blank">
     <img src="https://img.shields.io/badge/License-MIT-800080" alt="License: MIT"></a>
   <img src="https://img.shields.io/github/stars/Dalageo/fine-tuning-llms?style=social" alt="GitHub stars">
 </div>
 
-# Fine-Tuning Large Language Models for Mental Health Classification 🧠
+# Fine-Tuning Large Language Models
 
 This project demonstrates efficient fine-tuning of Large Language Models (LLMs) using **Parameter-Efficient Fine-Tuning (PEFT)** techniques, specifically **LoRA** and **QLoRA**, for mental health text classification. The system classifies user statements into seven categories: Normal, Depression, Suicidal, Anxiety, Stress, Bi-Polar, and Personality Disorder.
 
-The implementation leverages **Google's Gemma-3-1B-IT** model and supports both standard Hugging Face transformers and the optimized **Unsloth** framework, which provides up to 2x faster training and 60% memory reduction. The project uses **Supervised Fine-Tuning (SFT)** with adapter layers, keeping the base model frozen while training only a small percentage of parameters, making it feasible to run on consumer GPUs.
+The implementation leverages **Google's Gemma-3-1B-IT** model and supports both standard [**HuggingFace**](https://huggingface.co/) transformers and the optimized [**Unsloth**](https://unsloth.ai/) framework, which provides up to 2x faster training and 60% memory reduction. The project uses **Supervised Fine-Tuning (SFT)** with adapter layers, keeping the base model frozen while training only a small percentage of parameters, making it feasible to run on consumer GPUs.
+
+The core of the project relies on Supervised Fine-Tuning (SFT). Instead of retraining the entire 1-billion parameter model, we freeze the base weights and inject trainable adapter matrices into the attention layers.
 
 ## Project Architecture
 
 The pipeline consists of three main stages:
 
 1. **Data Preparation**: CSV dataset is loaded, cleaned, and formatted into a conversational template compatible with instruction-tuned models
-2. **Training**: The model is fine-tuned using either LoRA (Low-Rank Adaptation) or QLoRA (Quantized LoRA) with 4-bit quantization
+2. **Training**: The model is fine-tuned using either **LoRA (Low-Rank Adaptation)** or **QLoRA (Quantized LoRA)** with 4-bit quantization
 3. **Inference**: The trained adapters are loaded onto the base model for real-time classification with both evaluation and interactive chat modes
 
 ## Key Features
@@ -57,15 +57,6 @@ $$
 
 Only the bin index (4 bits) is stored instead of the full float32 value (32 bits), achieving 8x compression.
 
-### Model Configuration
-
-- **Base Model**: google/gemma-3-1b-it (1 billion parameters)
-- **Max Sequence Length**: 32,768 tokens (per sequence)
-- **Training**: 1,200 steps with batch size 2 × 8 gradient accumulation (effective batch size: 16)
-- **Optimizer**: AdamW 8-bit with learning rate 2e-4, linear decay, and 200 warmup steps
-- **Precision**: BFloat16 for RTX 40 series GPUs
-- **LoRA Rank**: 16 (LoRA), 64 (QLoRA)
-- **Trainable Parameters**: ~0.35% of total model parameters
 
 ## Dataset
 
@@ -176,8 +167,6 @@ fine-tuning-llms/
 │   │   └── upload.py           # Upload trained adapters to HuggingFace
 │   ├── train.py                # Training pipeline
 │   └── inference.py            # Inference and evaluation
-├── sft_output/                 # Training outputs (adapters, checkpoints)
-├── models/                     # Cached models
 ├── pyproject.toml              # Poetry dependencies
 ```
 
