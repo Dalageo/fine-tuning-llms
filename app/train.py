@@ -23,12 +23,13 @@ import os
 import gc
 os.environ["PYTORCH_ALLOC_CONF"] = "expandable_segments:True"
 import torch
-from app.model import load_model
+import unsloth
 from trl import SFTConfig, SFTTrainer
-from app.tokenizer import load_tokenizer
+from app.model.model import load_model
 from timeit import default_timer as timer
-from app.data_prep import prepare_dataset
-from app.config import DATASET_PATH, HF_REPO_ID, LORA_MODE, ADAPTER_DIR
+from app.model.tokenizer import load_tokenizer
+from app.utils.data_prep import prepare_dataset
+from app.configs.config import DATASET_PATH, HF_REPO_ID, LORA_MODE, ADAPTER_DIR
 
 
 def clear_gpu_memory():
@@ -76,6 +77,9 @@ def train_model(lora_mode: str = LORA_MODE, model_id: str = HF_REPO_ID):
         gradient_checkpointing = True,              # Saves GPU memory by not storing forward pass data. It recomputes them during backpropagation (trades speed for memory)
         gradient_accumulation_steps = 8,            # Combine gradients from 1 different batch before updating weights (simulates larger batch size with less memory)
         gradient_checkpointing_kwargs={"use_reentrant": False},
+        
+        # Dataset Processing
+        dataset_num_proc  = 1,                      # Disable multiprocessing to prevent worker crashes
         
         # Evaluation & Logging
         logging_steps = 10,                         # Frequency (in steps) to log training metrics.

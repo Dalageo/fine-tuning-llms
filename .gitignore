@@ -1,5 +1,6 @@
 models/
 sft_output/
+unsloth_compiled_cache/
 *.safetensors
 *.pt
 __pycache__/
