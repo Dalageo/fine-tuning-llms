@@ -1,6 +1,7 @@
 
-from app.config import HF_REPO_ID
 from transformers import AutoTokenizer
+from app.configs.config import HF_REPO_ID
+
 
 def load_tokenizer(model_id: str = HF_REPO_ID, inference: bool = False):
     """Loads and configures the tokenizer."""

@@ -1,4 +1,4 @@
-from app.config import HF_TOKEN, HF_REPO_ID
+from app.configs.config import HF_TOKEN, HF_REPO_ID
 from huggingface_hub import login, snapshot_download
 
 

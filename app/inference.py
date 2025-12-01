@@ -1,9 +1,10 @@
 import torch
-from app.model import load_model
+import unsloth
 from transformers import TextStreamer
-from app.tokenizer import load_tokenizer
-from app.data_prep import prepare_dataset
-from app.config import HF_REPO_ID, DATASET_PATH
+from app.model.model import load_model
+from app.model.tokenizer import load_tokenizer
+from app.utils.data_prep import prepare_dataset
+from app.configs.config import HF_REPO_ID, DATASET_PATH
 
 
 def generate_response(model, tokenizer, input_text, use_streamer=False):

@@ -23,12 +23,13 @@ import os
 import gc
 os.environ["PYTORCH_ALLOC_CONF"] = "expandable_segments:True"
 import torch
-from app.model import load_model
+import unsloth
 from trl import SFTConfig, SFTTrainer
-from app.tokenizer import load_tokenizer
+from app.model.model import load_model
 from timeit import default_timer as timer
-from app.data_prep import prepare_dataset
-from app.config import DATASET_PATH, HF_REPO_ID, LORA_MODE, ADAPTER_DIR
+from app.model.tokenizer import load_tokenizer
+from app.utils.data_prep import prepare_dataset
+from app.configs.config import DATASET_PATH, HF_REPO_ID, LORA_MODE, ADAPTER_DIR
 
 
 def clear_gpu_memory():
