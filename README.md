@@ -16,11 +16,11 @@
 
 # Fine-Tuning Large Language Models
 
-This project demonstrates efficient fine-tuning of Large Language Models (LLMs) using **Parameter-Efficient Fine-Tuning (PEFT)** techniques, specifically **LoRA** and **QLoRA**, for mental health text classification. The system classifies user statements into seven categories: Normal, Depression, Suicidal, Anxiety, Stress, Bi-Polar, and Personality Disorder.
+This project implements a resource-efficient method for fine-tuning Large Language Models (LLMs) on consumer-grade hardware. It focuses on the technical implementation of **Parameter-Efficient Fine-Tuning (PEFT)**, offering a modular codebase that supports two distinct training pathways: the standard [**Hugging Face**](https://huggingface.co/) library and the optimized [**Unsloth**](https://unsloth.ai/) framework.
 
-The implementation leverages **Google's Gemma-3-1B-IT** model and supports both standard [**HuggingFace**](https://huggingface.co/) transformers and the optimized [**Unsloth**](https://unsloth.ai/) framework, which provides up to 2x faster training and 60% memory reduction. The project uses **Supervised Fine-Tuning (SFT)** with adapter layers, keeping the base model frozen while training only a small percentage of parameters, making it feasible to run on consumer GPUs.
+To achieve this efficiency, the system employs **Low-Rank Adaptation (LoRA)**. Instead of retraining the full model parameters, a process that requires massive computational resources, LoRA freezes the pre-trained model and injects trainable rank-decomposition matrices into the transformer layers. For further optimization, the project supports **QLoRA (Quantized LoRA)**. This technique quantizes the frozen base model to 4-bit precision to significantly reduce memory usage (VRAM) while maintaining model performance. This approach makes it possible to fine-tune billion-parameter models on standard GPUs.
 
-The core of the project relies on Supervised Fine-Tuning (SFT). Instead of retraining the entire 1-billion parameter model, we freeze the base weights and inject trainable adapter matrices into the attention layers.
+The implementation is demonstrated using **Google's Gemma-3-1B-IT** as the base model and serves as a practical reference for developers looking to adapt similar architectures to downstream tasks.
 
 ## Project Architecture
 
