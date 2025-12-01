@@ -1,5 +1,5 @@
 from huggingface_hub import login, HfApi
-from app.config import HF_TOKEN, HF_PERSONAL_REPO_ID, ADAPTER_DIR
+from app.configs.config import HF_TOKEN, HF_PERSONAL_REPO_ID, ADAPTER_DIR
 
 
 def upload_model(hf_token: str, hf_personal_repo_id: str, local_model_dir: str):

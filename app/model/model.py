@@ -54,10 +54,10 @@ import torch
 import unsloth
 from peft import PeftModel
 from unsloth import FastLanguageModel
-from app.lora_config import lora_cfg, qlora_cfg
+from app.configs.lora_config import lora_cfg, qlora_cfg
 from peft import get_peft_model, prepare_model_for_kbit_training
 from transformers import AutoModelForCausalLM, BitsAndBytesConfig
-from app.config import HF_REPO_ID, ADAPTER_DIR, LORA_MODE, UNSLOTH
+from app.configs.config import HF_REPO_ID, ADAPTER_DIR, LORA_MODE, UNSLOTH
 
 
 def load_model(model_id: str = HF_REPO_ID, inference: bool = False):
