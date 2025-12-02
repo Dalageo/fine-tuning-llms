@@ -37,6 +37,28 @@ The project uses the [**Sentiment Analysis for Mental Health**](https://www.kagg
 | **Bi-Polar** | Text exhibiting rapid mood cycling, manic energy, or depressive lows. |
 | **Personality Disorder** | Patterns of behavior or inner experience that deviate markedly from expectations. |
 
+## Development Workflow
+This project follows a three-tier branching strategy with automated deployments:
+
+### Branch Structure
+
+- **`dev`** - Development branch for active feature work
+- **`tst`** - Testing/staging environment for validation
+- **`prd`** - Production-ready stable releases
+
+### CI/CD Pipeline
+
+**Automatic Deployment (dev → tst)**:
+- Any push to `dev` automatically triggers a GitHub Actions workflow
+- Changes are merged into `tst` branch for testing
+- Workflow: `.github/workflows/deploy_tst.yml`
+
+**Manual Deployment (tst → prd)**:
+- Deployment to `prd` requires manual approval via GitHub Actions
+- Only executable from the `tst` branch
+- Workflow: `.github/workflows/deploy_prd.yml`
+
+This approach ensures code quality through staged validation before reaching production.
 
 ## Setup Instructions
 
