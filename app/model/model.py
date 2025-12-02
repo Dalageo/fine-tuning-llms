@@ -1,8 +1,12 @@
 """
 ## **Quantization Process**
 
-Quantization reduces memory usage by dividing the range of possible weights into discrete bins and storing the bin index instead of the full floating-point value. Here's how it works:
-The range of weights, often normalized to a fixed range (e.g., [-1.0, 1.0]), is divided into bins. For example, with **4-bit quantization**, the range is split into 2^4 = 16 bins, each with a center value. During quantization, each weight is assigned to its closest bin center, replacing the original value. Instead of storing the weight itself, only the bin index (e.g., an integer between 0 and 15) is saved. This drastically reduces the memory footprint while maintaining approximate accuracy.
+Quantization reduces memory usage by dividing the range of possible weights into discrete bins and storing the 
+bin index instead of the full floating-point value. The range of weights, often normalized to a fixed range 
+(e.g., [-1.0, 1.0]), is divided into bins. For example, with **4-bit quantization**, the range is split into 2^4 = 16 bins, 
+each with a center value. During quantization, each weight is assigned to its closest bin center, replacing the 
+original value. Instead of storing the weight itself, only the bin index (e.g., an integer between 0 and 15) is saved. 
+This dramatically reduces the memory footprint while maintaining approximate accuracy.
 
 ### **Example with 4-Bit Quantization**
 
@@ -27,9 +31,13 @@ $$
 
 ### **Decompression and Computation**
 
-During computation (e.g., forward or backward passes), the bin index is used to retrieve the corresponding bin center value, which acts as the weight in calculations. 
+During computation (e.g., forward or backward passes), the bin index is used to retrieve 
+the corresponding bin center value, which acts as the weight in calculations. 
 
-**Note on Training (QLoRA):** In this project, the quantized base weights are **frozen**. We do not update them or re-quantize them. Instead, the gradients are passed to the **Adapter layers**, which are the only parts of the model that change during training.
+**Note on Training (QLoRA):** In this project, the quantized base weights are **frozen** 
+(not updated). During backpropagation, gradients flow through these frozen weights but 
+only accumulate and update the **LoRA adapter parameters**—the small trainable matrices 
+injected into the model layers.
 
 ---
 
