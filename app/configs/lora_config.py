@@ -1,6 +1,6 @@
 """
-Trainable parameters reported by LoRA directly correspond to the part of the model that can learn and adapt during fine-tuning. 
-We optimize only this subset of the model, leaving the rest frozen.
+LoRA (Low-Rank Adaptation) is a method that keeps the vast majority of the original model frozen and introduces a tiny subset of new, trainable parameters (the LoRA adapters).
+Therefore, only this small subset is updated during fine-tuning, saving computation and memory.
 """
 from peft import LoraConfig
 

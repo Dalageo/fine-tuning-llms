@@ -16,7 +16,8 @@
     **This would still be allowed since batch size is irrelevant as long as individual sequences are within the limit.**
 
 ### **For inference**:
-In our case if the conversation with the model exceeds the 32768 tokens, older tokens are typically removed using a sliding window approach to make room for new tokens. That means that the model loses context from the beginning of the conversation.
+In our case if the conversation with the model exceeds the 32768 tokens, older tokens are typically removed using a sliding window approach to make room for new tokens. 
+That means that the model loses context from the beginning of the conversation.
 """
 
 import os
