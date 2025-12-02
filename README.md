@@ -10,7 +10,7 @@
   <a href="https://developer.nvidia.com/cuda-12-4-0-download-archive" target="_blank">
   <img src="https://img.shields.io/badge/CUDA-12.4-brightgreen.svg" alt="CUDA 12.4"></a>
   <a href="https://github.com/Dalageo/fine-tuning-llms/blob/main/LICENSE" target="_blank">
-    <img src="https://img.shields.io/badge/License-MIT-800080" alt="License: MIT"></a>
+    <img src="https://img.shields.io/badge/License-AGPL%20v3-800080" alt="License: AGPLv3"></a>
   <img src="https://img.shields.io/github/stars/Dalageo/fine-tuning-llms?style=social" alt="GitHub stars">
 </div>
 
