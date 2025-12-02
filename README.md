@@ -167,13 +167,13 @@ Special thanks to [Google](https://deepmind.google/models/gemma/) for developing
 <div align="center">
   <br>
   <a href="https://huggingface.co/">
-    <img src="https://github.com/user-attachments/assets/a15c7c0d-9ab5-4674-b81e-e46bbba3cf58" alt="Gemma" width="120"/></a>
+    <img src="https://github.com/user-attachments/assets/a15c7c0d-9ab5-4674-b81e-e46bbba3cf58" alt="Gemma" width="100"/></a>
   &nbsp;&nbsp;&nbsp;&nbsp;
   <a href="https://huggingface.co/">
-    <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="HuggingFace" width="120"/></a>
+    <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="HuggingFace" width="100"/></a>
   &nbsp;&nbsp;&nbsp;&nbsp;
   <a href="https://unsloth.ai/">
-    <img src="https://github.com/user-attachments/assets/30b91a02-fa01-467a-8dcb-f1ea5d799b16" alt="Unsloth" width="120"/></a>
+    <img src="https://github.com/user-attachments/assets/30b91a02-fa01-467a-8dcb-f1ea5d799b16" alt="Unsloth" width="100"/></a>
 </div>
 
 ## License
