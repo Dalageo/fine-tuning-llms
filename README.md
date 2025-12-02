@@ -94,7 +94,7 @@ Training artifacts will be saved to `./sft_output/{HF_REPO_ID}/` including:
 - Adapter weights (`adapter_model.safetensors`)
 - Tokenizer files
 - Configuration files
-- Checkpoints (saved according to the predefined $\text{save\_steps}$ setting)
+- Checkpoints (saved according to the predefined save_steps setting)
 
 ### Inference
 
@@ -161,28 +161,43 @@ fine-tuning-llms/
 
 ## Acknowledgments
 
-Special thanks to:
-- [Unsloth AI](https://github.com/unslothai/unsloth) for the optimized training framework
-- [Hugging Face](https://huggingface.co/) for Transformers, PEFT, and TRL libraries
-- [Google](https://ai.google.dev/gemma) for the Gemma-3 model series
+Special thanks to [Google](https://deepmind.google/models/gemma/) for developing and releasing open-source models, to the [Hugging Face](https://huggingface.co/) community for hosting the models and providing the Transformers, PEFT, and TRL libraries, and to [Unsloth AI](https://github.com/unslothai/unsloth) for their optimized training framework that makes it easier for individuals to experiment with LLMs using their own GPUs. Their contributions were essential to this project.
+
 
 <div align="center">
   <br>
-  <a href="https://github.com/unslothai/unsloth">
-    <img src="https://github.com/user-attachments/assets/unsloth-logo.png" alt="Unsloth" width="100"/></a>
   <a href="https://huggingface.co/">
-    <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="HuggingFace" width="100"/></a>
+    <img src="https://github.com/user-attachments/assets/a15c7c0d-9ab5-4674-b81e-e46bbba3cf58" alt="Gemma" width="120"/></a>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="https://huggingface.co/">
+    <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="HuggingFace" width="120"/></a>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="https://unsloth.ai/">
+    <img src="https://github.com/user-attachments/assets/30b91a02-fa01-467a-8dcb-f1ea5d799b16" alt="Unsloth" width="120"/></a>
 </div>
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This repository utilizes components with different licenses:
 
-The Gemma-3 model is subject to Google's [Gemma Terms of Use](https://ai.google.dev/gemma/terms).
+* **The Code & Documentation:** Licensed under the **[AGPL-3.0 license](https://www.gnu.org/licenses/agpl-3.0.en.html)**.
+    > The AGPL-3.0 license was chosen to promote open collaboration, ensure transparency, and require that any modifications or improvements must also be shared under the same license, with appropriate acknowledgment.
+
+* **The Base LLM Weights:** Gemma weights used for fine-tuning are subject to their respective Google's terms **[Gemma Terms of Use](https://ai.google.dev/gemma/terms)**.
+
+* **The Unsloth Framework:** Unsloth AI is an open-source tool licensed under the **[Apache License 2.0](https://github.com/unslothai/unsloth/blob/main/LICENSE)**.
+
+* **Dataset**: The [Sentiment Analysis for Mental Health](https://www.kaggle.com/datasets/suchintikasarkar/sentiment-analysis-for-mental-health) dataset may have its own license terms on Kaggle.
+
 
 <div align="center">
   <br>
-  <a href="https://opensource.org/licenses/MIT">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/0/0c/MIT_logo.svg" alt="MIT-Logo" width="150">
-  </a>
+  <a href="https://www.gnu.org/licenses/agpl-3.0.en.html">
+    <img src="https://github.com/user-attachments/assets/f3c6face-aa86-45da-8d20-d8ae25e49e28" alt="AGPLv3-Logo" width="200""></a>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="https://www.apache.org/licenses/LICENSE-2.0">
+    <img src="https://github.com/user-attachments/assets/bcf30286-f8b7-488a-8300-ec2464090c33" alt="Apache License 2.0" width="200" height="100"></a>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="https://ai.google.dev/gemma/terms">
+    <img src=https://github.com/user-attachments/assets/3f9684fa-2886-46cd-be48-5a27bf1ad57a alt="Google-Logo" width="80"></a>
 </div>
