@@ -64,6 +64,7 @@ This project follows a three-tier branching strategy with automated deployments:
 
 ### Prerequisites
 
+- **Operating System:** A **Linux environment (Ubuntu, Debian, etc.) or Windows Subsystem for Linux (WSL 2)**.
 - **NVIDIA GPU** with CUDA 12.4 support (RTX 30/40 series recommended)
 - **Python 3.11**
 - [**Poetry**](https://github.com/python-poetry/poetry) for dependency management
