@@ -58,7 +58,7 @@ This project follows a three-tier branching strategy with automated deployments:
 - Only executable from the `tst` branch
 - Workflow: `.github/workflows/deploy_prd.yml`
 
-This approach ensures code quality through staged validation before reaching production.
+*Although this is a personal project, the CI/CD pipeline adheres to professional standards for maintaining a stable codebase and facilitating effective collaboration.*
 
 ## Setup Instructions
 
