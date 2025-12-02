@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/7d945778-b9de-4c4c-89b5-9d9b34e5b101" width="650" />
+  <img src="https://github.com/user-attachments/assets/7d945778-b9de-4c4c-89b5-9d9b34e5b101" width="700" />
 </div>
 
 <div align="center">
@@ -25,7 +25,7 @@ The implementation is demonstrated using [**Google's Gemma-3-1B-IT**](https://hu
 
 ## Dataset Description
 
-The project uses the [**Sentiment Analysis for Mental Health**](https://www.kaggle.com/datasets/suchintikasarkar/sentiment-analysis-for-mental-health) dataset containing user statements labeled with mental health conditions. This dataset is structured in a simple CSV format containing approximately 53,000 rows. Each entry consists of a unique identifier, the raw text statement, and the corresponding ground-truth label. It classifies text into seven distinct categories. It is important to note that the classes are imbalanced, with conditions like "Normal" and "Depression" being significantly more represented than "Personality Disorder" or "Bi-Polar." This imbalance presents a realistic challenge for fine-tuning, requiring the model to learn features for minority classes effectively. The specific labels used in this project are detailed below:
+The project used the [**Sentiment Analysis for Mental Health**](https://www.kaggle.com/datasets/suchintikasarkar/sentiment-analysis-for-mental-health) dataset for experimentation which, contains user statements labeled with mental health conditions. This dataset is structured in a simple CSV format containing approximately 53,000 rows. Each entry consists of a unique identifier, the raw text statement, and the corresponding ground-truth label. It classifies text into seven distinct categories. It is important to note that the classes are imbalanced, with conditions like "Normal" and "Depression" being significantly more represented than "Personality Disorder" or "Bi-Polar." This imbalance presents a realistic challenge for fine-tuning, requiring the model to learn features for minority classes effectively. The specific labels used in this project are detailed below:
 
 | Label | Description |
 | :--- | :--- |
