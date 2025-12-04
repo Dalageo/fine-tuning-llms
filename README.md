@@ -23,7 +23,7 @@ The key to achieving this resource-efficient method lies in the use of [**Low-Ra
 The entire implementation is demonstrated using [**Google's Gemma-3-1B-IT**](https://huggingface.co/google/gemma-3-1b-it) as the base model and serves as a practical reference for developers looking to adapt similar architectures to downstream tasks.
 
 
-## 📜Dataset Description
+## 📜 Dataset Description
 
 The project used the [**Sentiment Analysis for Mental Health**](https://www.kaggle.com/datasets/suchintikasarkar/sentiment-analysis-for-mental-health) dataset for experimentation which, contains user statements labeled with mental health conditions. This dataset is structured in a simple CSV format containing approximately 53,000 rows. Each entry consists of a unique identifier, the raw text statement, and the corresponding ground-truth label. It classifies text into seven distinct categories. It is important to note that the classes are imbalanced, with conditions like "Normal" and "Depression" being significantly more represented than "Personality Disorder" or "Bi-Polar." This imbalance presents a realistic challenge for fine-tuning, requiring the model to learn features for minority classes effectively. The specific labels used in this project are detailed below:
 
@@ -60,7 +60,7 @@ This project follows a three-tier branching strategy with automated deployments:
 
 *Although this is a personal project, the CI/CD pipeline adheres to professional standards for maintaining a stable codebase and facilitating effective collaboration.*
 
-## 🚀Setup Instructions
+## ⚙️ Setup Instructions
 
 ### Prerequisites
 
@@ -165,7 +165,7 @@ fine-tuning-llms/
 ├── pyproject.toml              # Poetry dependencies
 ```
 
-## ❓Troubleshooting
+## ❓ Troubleshooting
 
 ### CUDA Out of Memory
 - Reduce `per_device_train_batch_size` in `train.py`
@@ -182,7 +182,7 @@ fine-tuning-llms/
 - Use Poetry's lock file: `poetry install --sync`
 - Ensure PyTorch is from CUDA 12.4 source: check `pyproject.toml`
 
-## ✨Acknowledgments
+## ✨ Acknowledgments
 
 Special thanks to [Google](https://deepmind.google/models/gemma/) for developing and releasing open-source models, to the [Hugging Face](https://huggingface.co/) community for hosting the models and providing the Transformers, PEFT, and TRL libraries, and to [Unsloth AI](https://github.com/unslothai/unsloth) for their optimized training framework that makes it easier for individuals to experiment with LLMs using their own GPUs. Their contributions were essential to this project.
 
@@ -199,7 +199,7 @@ Special thanks to [Google](https://deepmind.google/models/gemma/) for developing
     <img src="https://github.com/user-attachments/assets/30b91a02-fa01-467a-8dcb-f1ea5d799b16" alt="Unsloth" width="120"/></a>
 </div>
 
-##  📝License
+## ⚖️ License
 
 This repository utilizes components with different licenses:
 
