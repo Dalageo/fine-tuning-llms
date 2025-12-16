@@ -12,7 +12,7 @@
   <a href="https://github.com/Dalageo/fine-tuning-llms/blob/dev/LICENSE" target="_blank">
     <img src="https://img.shields.io/badge/License-AGPL%20v3-800080" alt="License: AGPLv3"></a>
   <img src="https://img.shields.io/github/stars/Dalageo/fine-tuning-llms?style=social" alt="GitHub stars">
-</div>
+</div> 
 
 # Fine-Tuning Large Language Models 🧠
 
