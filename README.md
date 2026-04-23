@@ -22,6 +22,7 @@ The key to achieving this resource-efficient method lies in the use of [**Low-Ra
 
 The entire implementation is demonstrated using [**Google's Gemma-3-1B-IT**](https://huggingface.co/google/gemma-3-1b-it) as the base model and serves as a practical reference for developers looking to adapt similar architectures to downstream tasks.
 
+<br>
 
 ## 📜 Dataset Description
 
@@ -36,6 +37,8 @@ The project used the [**Sentiment Analysis for Mental Health**](https://www.kagg
 | **Stress** | Reactions to external pressure, tension, burnout, or inability to cope. |
 | **Bi-Polar** | Text exhibiting rapid mood cycling, manic energy, or depressive lows. |
 | **Personality Disorder** | Patterns of behavior or inner experience that deviate markedly from expectations. |
+
+<br>
 
 ## 🛠️Development Workflow
 This project follows a three-tier branching strategy with automated deployments:
@@ -59,6 +62,8 @@ This project follows a three-tier branching strategy with automated deployments:
 - Workflow: `.github/workflows/deploy_prd.yml`
 
 *Although this is a personal project, the CI/CD pipeline adheres to professional standards for maintaining a stable codebase and facilitating effective collaboration.*
+
+<br>
 
 ## ⚙️ Setup Instructions
 
@@ -145,6 +150,8 @@ poetry run python -m app.utils.upload
 
 The model will be pushed to the configured `HF_PERSONAL_REPO_ID` on HuggingFace Hub.
 
+<br>
+
 ## 📁 Project Structure
 
 ```
@@ -165,6 +172,8 @@ fine-tuning-llms/
 ├── pyproject.toml              # Poetry dependencies
 ```
 
+<br>
+
 ## ❓ Troubleshooting
 
 ### CUDA Out of Memory
@@ -182,10 +191,11 @@ fine-tuning-llms/
 - Use Poetry's lock file: `poetry install --sync`
 - Ensure PyTorch is from CUDA 12.4 source: check `pyproject.toml`
 
+<br>
+
 ## ✨ Acknowledgments
 
 Special thanks to [Google](https://deepmind.google/models/gemma/) for developing and releasing open-source models, to the [Hugging Face](https://huggingface.co/) community for hosting the models and providing the Transformers, PEFT, and TRL libraries, and to [Unsloth AI](https://github.com/unslothai/unsloth) for their optimized training framework that makes it easier for individuals to experiment with LLMs using their own GPUs. Their contributions were essential to this project.
-
 
 <div align="center">
   <br>
@@ -198,6 +208,8 @@ Special thanks to [Google](https://deepmind.google/models/gemma/) for developing
   <a href="https://unsloth.ai/">
     <img src="https://github.com/user-attachments/assets/30b91a02-fa01-467a-8dcb-f1ea5d799b16" alt="Unsloth" width="120"/></a>
 </div>
+
+<br>
 
 ## ⚖️ License
 
@@ -219,7 +231,7 @@ This repository utilizes components with different licenses:
     <img src="https://github.com/user-attachments/assets/f3c6face-aa86-45da-8d20-d8ae25e49e28" alt="AGPLv3-Logo" width="200""></a>
     &nbsp;&nbsp;&nbsp;&nbsp;
   <a href="https://www.apache.org/licenses/LICENSE-2.0">
-    <img src="https://github.com/user-attachments/assets/bcf30286-f8b7-488a-8300-ec2464090c33" alt="Apache License 2.0" width="200" height="100"></a>
+    <img src="https://github.com/user-attachments/assets/bcf30286-f8b7-488a-8300-ec2464090c33" alt="Apache License 2.0" width="200"></a>
     &nbsp;&nbsp;&nbsp;&nbsp;
   <a href="https://ai.google.dev/gemma/terms">
     <img src=https://github.com/user-attachments/assets/3f9684fa-2886-46cd-be48-5a27bf1ad57a alt="Google-Logo" width="80"></a>
