@@ -1,3 +1,5 @@
+
+
 <div align="center">
   <img src="https://github.com/user-attachments/assets/7d945778-b9de-4c4c-89b5-9d9b34e5b101" width="700" />
 </div>
@@ -86,6 +88,7 @@ This project follows a three-tier branching strategy with automated deployments:
 2. **Install Poetry** (if not already installed):
    ```bash
    curl -sSL https://install.python-poetry.org | python3 -
+   3 -
    ```
 
 3. **Install dependencies**:
@@ -96,7 +99,7 @@ This project follows a three-tier branching strategy with automated deployments:
 
 4. **Create `.env` file with your HuggingFace token**:
    ```bash
-   "HF_TOKEN=your_huggingface_token_here"
+   echo "HF_TOKEN=your_huggingface_token_here" > .env
    ```
 
 5. **Update dataset path** in `app/configs/config.py`:
